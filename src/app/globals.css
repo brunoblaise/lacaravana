@@ -3,13 +3,16 @@
 	margin: 0;
 	box-sizing: border-box;
 	font-family: 'Roboto', sans-serif;
-
 }
 
-body{
-	height:630px;
+body {
+	height: 630px;
 	overflow-x: hidden;
 }
 ul li a {
-  padding: 14px;
+	padding: 14px;
+}
+
+div div h3 {
+	padding-left: 20px;
 }

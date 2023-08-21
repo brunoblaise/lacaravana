@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import StyledComponentsRegistry from '../lib/AntdRegistry';
 import { ToastProvider } from '@/providers/toast-provider';
+import { ConfigProvider } from 'antd';
+import theme from '@/theme/themeConfig';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -20,7 +22,9 @@ export default function RootLayout({
 			<body className={inter.className}>
 				{' '}
 				<ToastProvider />
-				<StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+				<StyledComponentsRegistry>
+					<ConfigProvider theme={theme}>{children}</ConfigProvider>
+				</StyledComponentsRegistry>
 			</body>
 		</html>
 	);

@@ -76,7 +76,8 @@ const Land: FC<LandProps> = ({}) => {
 			</div>
 			<Contact />
 			<Menup />
-			<footer style={{ position: 'relative', bottom:'50px', zIndex: -99 }}>
+
+			<footer style={{ position: 'relative', bottom: '50px', zIndex: -99 }}>
 				<Image
 					src="/images/footer.png"
 					alt="footer"
@@ -84,7 +85,6 @@ const Land: FC<LandProps> = ({}) => {
 					height={1000}
 					loading="lazy"
 					object-fit="cover"
-
 				/>
 			</footer>
 		</>
