@@ -5,7 +5,7 @@ interface checkoutProps {}
 const Checkout: FC<checkoutProps> = ({}) => {
 	return (
 		<div
-			style={{ marginLeft: '220px' }}
+			style={{ marginLeft: '10px' }}
 			className="checkout"
 		></div>
 	);
