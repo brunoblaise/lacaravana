@@ -1,0 +1,17 @@
+.nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.space {
+	margin-top: 80px;
+}
+
+.menu {
+	width: 105px;
+	height: 1117px;
+	background: #fff;
+	box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.05);
+}

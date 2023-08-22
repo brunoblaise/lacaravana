@@ -1,0 +1,26 @@
+h4 {
+	color: #2f2f2f;
+	font-size: 24px;
+	width: 180px;
+}
+h6 {
+	color: #b4bccf;
+	font-size: 20px;
+}
+
+.search {
+	width: 250px;
+	padding: 15px;
+	border-radius: 15px;
+
+	border: 1px solid rgba(180, 188, 207, 0.41);
+	position: absolute;
+}
+
+.svg {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	bottom: -12px;
+	left: 200px;
+}

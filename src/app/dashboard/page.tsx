@@ -1,9 +1,12 @@
+import Body from '@/components/Dashboard/body/body';
 import { FC } from 'react';
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
-	return <div>Dashboard</div>;
+	return (
+		<Body />
+	);
 };
 
 export default page;
