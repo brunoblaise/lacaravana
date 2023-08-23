@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import Button from './Buttton/Button';
+import Button from '../Buttton/Button';
 
 interface MenuProps {}
 
@@ -74,10 +74,21 @@ const Menup: FC<MenuProps> = ({}) => {
 				</div>
 			</div>
 			<Button
-			name='Menu'
-				color="#F2C94C"
-				backgroundColor="transparent"
-				margin= '20px'
+				name="Menu"
+				style={{
+					color: 'white',
+					backgroundColor: 'transparent',
+					textAlign: 'center',
+					fontSize: '17px',
+					fontStyle: 'normal',
+					fontWeight: '700',
+					lineHeight: '0px',
+					borderRadius: '2px',
+					border: `2px solid #F2C94C`,
+					width: '129px',
+					height: '54px',
+					margin: '20px',
+				}}
 			/>
 		</div>
 	);
