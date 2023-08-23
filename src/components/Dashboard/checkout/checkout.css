@@ -1,5 +1,63 @@
 .checkout {
-	width: 400px;
+	width: 460px;
 	background: #fff;
 	box-shadow: -4px 0px 30px 0px rgba(0, 0, 0, 0.05);
+}
+.nav {
+	display: flex;
+	flex-direction: row;
+}
+
+h1 {
+	color: #000;
+
+	font-size: 28px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+h3 {
+	color: #ff9921;
+
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+.menucard {
+	display: flex;
+	flex-direction: row;
+	padding: 20px;
+	width: 356px;
+	height: 120px;
+	border-radius: 20px;
+	background: rgba(180, 188, 207, 0.3);
+	box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	color: #000;
+
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+span {
+	color: #01c550;
+
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+p {
+	color: #61656f;
+	font-family: Roboto;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
 }

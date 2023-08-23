@@ -40,7 +40,6 @@ const Header: FC<headerProps> = ({}) => {
 					</defs>
 				</svg>
 			</div>
-			
 		</div>
 	);
 };

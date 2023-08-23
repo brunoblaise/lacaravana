@@ -8,7 +8,7 @@
 
 .menubar h4 {
 	color: #000;
-	font-family: Roboto;
+	
 	font-size: 26px;
 	font-style: normal;
 	font-weight: 700;
@@ -18,8 +18,8 @@
 
 .menubar span {
 	color: #b4bccf;
-	font-family: Roboto;
-	font-size: 17px;
+	
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 600;
 	line-height: 144.687%; /* 28.937px */
@@ -28,8 +28,8 @@
 
 .menubar h5 {
 	color: #01c550;
-	font-family: Roboto;
-	font-size: 26px;
+	
+	font-size: 22px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 144.687%; /* 46.3px */
