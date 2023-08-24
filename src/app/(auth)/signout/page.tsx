@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Segmente from '@/components/segmente';
 import { url } from '@/utils/url';
+import { toast } from 'react-hot-toast';
 interface User {
 	email: string;
 	password: string;
@@ -25,8 +26,10 @@ const page: FC = ({}) => {
 			});
 			const data = await res.json();
 			console.log(data);
+			toast.success('Loggged In ');
 		} catch (err) {
 			console.error('<signup post>', err);
+			toast.error('Server error');
 		}
 	};
 	useEffect(() => {
@@ -40,8 +43,8 @@ const page: FC = ({}) => {
 			initialValues={{ remember: true }}
 			autoComplete="off"
 			onFinish={(values) => {
-				const { email, password, name}: User = values;
-				setUser({ email, password , name});
+				const { email, password, name }: User = values;
+				setUser({ email, password, name });
 			}}
 		>
 			<Segmente

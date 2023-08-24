@@ -3,8 +3,12 @@ import { FC, useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Segmente from '@/components/segmente';
 import { url } from '@/utils/url';
+import { toast } from 'react-hot-toast';
 
-interface  User {
+//TODO: set token in cookie in nextjs server side
+//TODO: file middleware.ts -> root folder to check token (list to be allowed to access)
+
+interface User {
 	email: string;
 	password: string;
 }
@@ -26,13 +30,19 @@ const page: FC = ({}) => {
 			});
 			const data = await res.json();
 			console.log(data);
-		} catch (err) {
+			const { msg, STATUS } = data;
+			if (STATUS === 200) {
+				return toast.success(msg);
+				/// set token
+			} else {
+				return toast.error(msg || 'Server error');
+			}
+		} catch (err: any) {
 			console.error('<signin post>', err);
+			toast.error('Server error');
 		}
 	};
-	useEffect(() => {
-		post();
-	}, []);
+
 	return (
 		<Form
 			name="basic"
@@ -40,8 +50,10 @@ const page: FC = ({}) => {
 			wrapperCol={{ span: 8 }}
 			initialValues={{ remember: true }}
 			onFinish={(values) => {
+				console.log(values);
 				const { email, password }: User = values;
 				setUser({ email, password });
+				post();
 			}}
 			autoComplete="off"
 		>
