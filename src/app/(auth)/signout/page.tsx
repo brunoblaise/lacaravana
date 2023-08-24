@@ -1,14 +1,37 @@
 'use client';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Segmente from '@/components/segmente';
-
-interface pageProps {}
+import { url } from '@/utils/url';
+interface User {
+	email: string;
+	password: string;
+	name: string;
+}
 
 const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
-const page: FC<pageProps> = ({}) => {
+const page: FC = ({}) => {
+	const [user, setUser] = useState({});
+	const post = async () => {
+		try {
+			const res = await fetch(`${url}/api/v1/auth/signup`, {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify(user),
+			});
+			const data = await res.json();
+			console.log(data);
+		} catch (err) {
+			console.error('<signup post>', err);
+		}
+	};
+	useEffect(() => {
+		post();
+	}, []);
 	return (
 		<Form
 			name="basic"
@@ -16,6 +39,10 @@ const page: FC<pageProps> = ({}) => {
 			wrapperCol={{ span: 8 }}
 			initialValues={{ remember: true }}
 			autoComplete="off"
+			onFinish={(values) => {
+				const { email, password, name}: User = values;
+				setUser({ email, password , name});
+			}}
 		>
 			<Segmente
 				signin="Signin"
@@ -25,7 +52,7 @@ const page: FC<pageProps> = ({}) => {
 			<div style={{ marginTop: '18%' }}>
 				<Form.Item
 					label="Username"
-					name="username"
+					name="name"
 					rules={[{ required: true, message: 'Please input your username!' }]}
 				>
 					<Input />
