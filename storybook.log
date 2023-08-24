@@ -1,5 +1,12 @@
 yarn add v1.22.19
 [1/4] Resolving packages...
-error An unexpected error occurred: "https://registry.yarnpkg.com/storybook: unable to verify the first certificate".
-info If you think this is a bug, please open a bug report with the information provided in "/Users/bukuru/Documents/pizza-f/yarn-error.log".
-info Visit https://yarnpkg.com/en/docs/cli/add for documentation about this command.
+warning @storybook/nextjs > @storybook/builder-webpack5 > webpack-dev-middleware > memfs@3.6.0: this will be v4
+warning @storybook/nextjs > @storybook/builder-webpack5 > fork-ts-checker-webpack-plugin > memfs@3.6.0: this will be v4
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+warning "react-hot-toast > goober@2.1.13" has unmet peer dependency "csstype@^3.0.10".
+warning "@storybook/nextjs > css-loader@6.8.1" has unmet peer dependency "webpack@^5.0.0".
+warning "@storybook/nextjs > node-polyfill-webpack-plugin@2.0.1" has unmet peer dependency "webpack@>=5".
+warning "@storybook/nextjs > style-loader@3.3.3" has unmet peer dependency "webpack@^5.0.0".
+warning "@storybook/nextjs > postcss-loader@7.3.3" has unmet peer dependency "webpack@^5.0.0".
+warning "@storybook/nextjs > sass-loader@12.6.0" has unmet peer dependency "webpack@^5.0.0".
