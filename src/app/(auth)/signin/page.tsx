@@ -4,8 +4,8 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import Segmente from '@/components/segmente';
 import { url } from '@/utils/url';
 import { toast } from 'react-hot-toast';
-
-//TODO: set token in cookie in nextjs server side
+import useUser from '@/store/store';
+//DONE: set token in cookie in nextjs server side
 //TODO: file middleware.ts -> root folder to check token (list to be allowed to access)
 
 interface User {
@@ -18,6 +18,7 @@ const tailLayout = {
 };
 
 const page: FC = ({}) => {
+	const { addUser ,data} = useUser();
 	const [user, setUser] = useState({});
 	const post = async () => {
 		try {
@@ -29,10 +30,12 @@ const page: FC = ({}) => {
 				body: JSON.stringify(user),
 			});
 			const data = await res.json();
-			console.log(data);
+
 			const { msg, STATUS } = data;
 			if (STATUS === 200) {
-				return toast.success(msg);
+				toast.success(msg);
+				addUser(data);
+
 				/// set token
 			} else {
 				return toast.error(msg || 'Server error');
@@ -54,6 +57,7 @@ const page: FC = ({}) => {
 				const { email, password }: User = values;
 				setUser({ email, password });
 				post();
+				console.log(data);
 			}}
 			autoComplete="off"
 		>
