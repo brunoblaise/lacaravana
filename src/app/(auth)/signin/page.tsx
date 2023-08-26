@@ -5,6 +5,7 @@ import Segmente from '@/components/segmente';
 import { url } from '@/utils/url';
 import { toast } from 'react-hot-toast';
 import useUser from '@/store/store';
+import { useRouter } from 'next/navigation';
 //DONE: set token in cookie in nextjs server side
 //TODO: file middleware.ts -> root folder to check token (list to be allowed to access)
 
@@ -18,8 +19,9 @@ const tailLayout = {
 };
 
 const page: FC = ({}) => {
-	const { addUser ,data} = useUser();
+	const { addUser, data } = useUser();
 	const [user, setUser] = useState({});
+	const redirect = useRouter();
 	const post = async () => {
 		try {
 			const res = await fetch(`${url}/api/v1/auth/login`, {
@@ -35,8 +37,9 @@ const page: FC = ({}) => {
 			if (STATUS === 200) {
 				toast.success(msg);
 				addUser(data);
-
 				/// set token
+				document.cookie = `token=${data.token}`;
+				redirect.push('/dashboard');
 			} else {
 				return toast.error(msg || 'Server error');
 			}
