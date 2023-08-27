@@ -1,12 +1,21 @@
+'use client';
 import { FC } from 'react';
 import Nav from '../nav/Nav';
 import Header from '../header/header';
 import Checkout from '../checkout/checkout';
 import Pizza from '../list/pizza';
+import useUser from '@/store/store';
 
 interface bodyProps {}
 
 const Body: FC<bodyProps> = ({}) => {
+	const { data } = useUser();
+
+	//data?.map((item) => console.log(item));
+	//const { DATA } = data;
+	//TODO:get datato the header
+	//TODO: get data to the checkout
+	//TODO: get the role of the user
 	return (
 		<div
 			style={{
@@ -28,7 +37,7 @@ const Body: FC<bodyProps> = ({}) => {
 					}}
 				>
 					<Header />
-					<Pizza/>
+					<Pizza />
 				</div>
 
 				<Checkout />

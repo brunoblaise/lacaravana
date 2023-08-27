@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import Segmente from '@/components/segmente';
 import { url } from '@/utils/url';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 interface User {
 	email: string;
 	password: string;
@@ -15,6 +16,7 @@ const tailLayout = {
 };
 const page: FC = ({}) => {
 	const [user, setUser] = useState({});
+	const redirect = useRouter();
 	const post = async () => {
 		try {
 			const res = await fetch(`${url}/api/v1/auth/signup`, {
@@ -25,8 +27,13 @@ const page: FC = ({}) => {
 				body: JSON.stringify(user),
 			});
 			const data = await res.json();
-			console.log(data);
-			toast.success('Loggged In ');
+			const { msg, STATUS } = data;
+			if (STATUS === 200) {
+				toast.success('check your email in mean time login');
+				redirect.push('/login');
+			} else {
+				return toast.error(msg || 'Server error');
+			}
 		} catch (err) {
 			console.error('<signup post>', err);
 			toast.error('Server error');

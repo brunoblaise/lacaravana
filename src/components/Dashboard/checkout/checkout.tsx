@@ -3,7 +3,7 @@ import './checkout.css';
 import Image from 'next/image';
 import Button from '@/components/Buttton/Button';
 interface checkoutProps {}
-
+//TODO: post the checkout
 const Checkout: FC<checkoutProps> = ({}) => {
 	return (
 		<div

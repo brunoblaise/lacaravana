@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { FC } from 'react';
 import './pizza.css';
 interface pizzaProps {}
-
+//TODO: fetch data from pizzza
 const Pizza: FC<pizzaProps> = ({}) => {
 	return (
 		<div style={{ margin: '30px', display: 'flex', flexDirection: 'column' }}>

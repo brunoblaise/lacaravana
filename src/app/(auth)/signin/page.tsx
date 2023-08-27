@@ -19,7 +19,7 @@ const tailLayout = {
 };
 
 const page: FC = ({}) => {
-	const { addUser, data } = useUser();
+	const { addUser } = useUser();
 	const [user, setUser] = useState({});
 	const redirect = useRouter();
 	const post = async () => {
@@ -60,7 +60,6 @@ const page: FC = ({}) => {
 				const { email, password }: User = values;
 				setUser({ email, password });
 				post();
-				console.log(data);
 			}}
 			autoComplete="off"
 		>
