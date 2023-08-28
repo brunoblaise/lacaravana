@@ -11,11 +11,15 @@ interface bodyProps {}
 const Body: FC<bodyProps> = ({}) => {
 	const { data } = useUser();
 
+	const name: string | undefined= data?.DATA.name;
+
 	//data?.map((item) => console.log(item));
-	//const { DATA } = data;
+	const { DATA } = data || {};
 	//TODO:get datato the header
 	//TODO: get data to the checkout
 	//TODO: get the role of the user
+
+
 	return (
 		<div
 			style={{
@@ -36,11 +40,11 @@ const Body: FC<bodyProps> = ({}) => {
 						flexDirection: 'column',
 					}}
 				>
-					<Header />
+					<Header name={name} />
 					<Pizza />
 				</div>
 
-				<Checkout />
+				<Checkout data={DATA} />
 			</div>
 		</div>
 	);

@@ -1,10 +1,38 @@
 import Button from '@/components/Buttton/Button';
 import Image from 'next/image';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './pizza.css';
-interface pizzaProps {}
-//TODO: fetch data from pizzza
-const Pizza: FC<pizzaProps> = ({}) => {
+import { url } from '@/utils/url';
+interface pizzaProps {
+	rows: {
+		available: boolean;
+		createdAt: string;
+		description: string;
+		id: number;
+		image: string;
+		name: string;
+		price: number;
+		updatedAt: string;
+	} | null;
+}
+//TODO: click on pizza button keep in it store after in checkout then post
+
+const Pizza: FC = ({}) => {
+	const [data, setData] = useState<pizzaProps>();
+	const [loading, setLoading] = useState(true);
+	const fecthData = async () => {
+		const response = await fetch(`${url}/api/v1/pizza/view?page=1&&limit=2`);
+		const res = await response.json();
+		setData(res.data);
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		fecthData();
+	}, []);
+
+	console.log(data?.rows);
+
 	return (
 		<div style={{ margin: '30px', display: 'flex', flexDirection: 'column' }}>
 			<div>
@@ -55,102 +83,61 @@ const Pizza: FC<pizzaProps> = ({}) => {
 
 				<div
 					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						justifyContent: 'space-between',
+						display: 'grid',
+						rowGap: '50px',
+						gridTemplateColumns: 'auto auto ',
 						width: '700px',
 					}}
 				>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'row',
-						}}
-						className="menubar"
-					>
-						<Image
-							src="/images/masked.png"
-							alt={'pizza'}
-							width={120}
-							height={160}
-							objectFit="cover"
-							loading="lazy"
-							style={{}}
-						/>
-						<div style={{ padding: '20px' }}>
-							<h4>Pizza with Peperoni</h4>
-							<span>14-20 minutes</span>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-								}}
-							>
-								<h5>$12</h5>
-								<Button
-									icon={
-										<Image
-											src="/images/btn.png"
-											width={40}
-											height={40}
-											alt="masked"
-											objectFit="cover"
-										/>
-									}
+					{loading
+						? 'loading ...'
+						: data?.rows.map((item) => (
+								<div
 									style={{
-										backgroundColor: 'transparent',
-										border: 'none',
-										position: 'relative',
+										display: 'flex',
+										flexDirection: 'row',
 									}}
-								/>
-							</div>
-						</div>
-					</div>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'row',
-						}}
-						className="menubar"
-					>
-						<Image
-							src="/images/ma.png"
-							alt={'pizza'}
-							width={120}
-							height={160}
-							objectFit="cover"
-							loading="lazy"
-							style={{}}
-						/>
-						<div style={{ padding: '20px' }}>
-							<h4>Pizza with Cheese</h4>
-							<span>16-25 minutes</span>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-								}}
-							>
-								<h5>$12</h5>
-								<Button
-									icon={
-										<Image
-											src="/images/btn.png"
-											width={40}
-											height={40}
-											alt="masked"
-											objectFit="cover"
-										/>
-									}
-									style={{
-										backgroundColor: 'transparent',
-										border: 'none',
-										position: 'relative',
-									}}
-								/>
-							</div>
-						</div>
-					</div>
+									className="menubar"
+								>
+									<Image
+										src="/images/masked.png"
+										alt={'pizza'}
+										width={120}
+										height={160}
+										objectFit="cover"
+										loading="lazy"
+										style={{}}
+									/>
+									<div style={{ padding: '20px' }}>
+										<h4>{item.name}</h4>
+										<span>14-20 minutes</span>
+										<div
+											style={{
+												display: 'flex',
+												flexDirection: 'row',
+											}}
+										>
+											<h5>${item.price}</h5>
+											<Button
+												icon={
+													<Image
+														src="/images/btn.png"
+														width={40}
+														height={40}
+														alt="masked"
+														objectFit="cover"
+													/>
+												}
+												style={{
+													backgroundColor: 'transparent',
+													border: 'none',
+													position: 'relative',
+												}}
+											/>
+										</div>
+									</div>
+								</div>
+						  ))}
 				</div>
 			</div>
 		</div>

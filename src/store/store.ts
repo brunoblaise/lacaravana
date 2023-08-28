@@ -8,7 +8,15 @@ interface User {
 		token: string;
 		msg: string;
 		time: string;
-		DATA: {};
+		DATA: {
+			createdAt: string;
+			email: string;
+			id: number;
+			name: string;
+			password: string;
+			role: string;
+			updatedAt: string;
+		};
 	} | null;
 	addUser: (
 		data: {
@@ -17,7 +25,15 @@ interface User {
 			msg: string;
 
 			time: string;
-			DATA: {};
+			DATA: {
+				createdAt: string;
+				email: string;
+				id: number;
+				name: string;
+				password: string;
+				role: string;
+				updatedAt: string;
+			};
 		} | null,
 	) => void;
 }
@@ -33,7 +49,15 @@ const useUser = create(
 					msg: string;
 
 					time: string;
-					DATA: {};
+					DATA: {
+						createdAt: string;
+						email: string;
+						id: number;
+						name: string;
+						password: string;
+						role: string;
+						updatedAt: string;
+					};
 				} | null,
 			) => set({ data }),
 		}),

@@ -2,9 +2,21 @@ import { FC } from 'react';
 import './checkout.css';
 import Image from 'next/image';
 import Button from '@/components/Buttton/Button';
-interface checkoutProps {}
+interface checkoutProps {
+	data:
+		| {
+				createdAt: string;
+				email: string;
+				id: number;
+				name: string;
+				password: string;
+				role: string;
+				updatedAt: string;
+		  }
+		| undefined;
+}
 //TODO: post the checkout
-const Checkout: FC<checkoutProps> = ({}) => {
+const Checkout: FC<checkoutProps> = ({ data }) => {
 	return (
 		<div
 			style={{ marginLeft: '-230px', padding: '20px' }}
@@ -25,7 +37,7 @@ const Checkout: FC<checkoutProps> = ({}) => {
 							padding: '5px',
 						}}
 					>
-						John Smith
+						{data?.name}
 					</h2>
 				</div>
 				<div style={{ position: 'relative', left: '190px' }}>
@@ -65,7 +77,15 @@ const Checkout: FC<checkoutProps> = ({}) => {
 						<p>8 inch</p>
 						<span>$12.00</span>
 
-						<div style={{ display: 'flex', flexDirection: 'row', position:'relative', bottom:'1px', left:'130px' }}>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								position: 'relative',
+								bottom: '1px',
+								left: '130px',
+							}}
+						>
 							<Image
 								src="/images/decrease.svg"
 								alt="checkout"

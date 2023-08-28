@@ -1,12 +1,16 @@
+'use client';
+
 import { FC } from 'react';
 import './header.css';
-interface headerProps {}
+interface headerProps {
+	name: string | undefined;
+}
 
-const Header: FC<headerProps> = ({}) => {
+const Header: FC<headerProps> = ({ name }) => {
 	return (
 		<div style={{ margin: '30px', display: 'flex', flexDirection: 'row' }}>
 			<div>
-				<h6>Hello John</h6>
+				<h6>Hello {name}</h6>
 				<h4>Welcome Back</h4>
 			</div>
 			<div style={{ marginLeft: '300px' }}>
