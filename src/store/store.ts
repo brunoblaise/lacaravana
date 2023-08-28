@@ -36,9 +36,23 @@ interface User {
 			};
 		} | null,
 	) => void;
+	store:
+		| [
+				{
+					available: boolean;
+					id: number;
+					name: string;
+					price: number;
+					image: string;
+					quantity: number;
+				},
+		  ]
+		| any;
+	addStore: (product: any) => void;
+	removeAll: () => void;
 }
 
-const useUser = create(
+export const useUser = create(
 	persist<User>(
 		(set) => ({
 			data: null,
@@ -60,9 +74,21 @@ const useUser = create(
 					};
 				} | null,
 			) => set({ data }),
+
+			store: [],
+			addStore: (product: any) =>
+				set((state) => ({
+					store: [...state.store, product],
+				})),
+
+			removeAll: () =>
+				set((state) => ({
+					store: [],
+				})),
 		}),
+
 		{
-			name: 'user-storage',
+			name: 'storage',
 		},
 	),
 );

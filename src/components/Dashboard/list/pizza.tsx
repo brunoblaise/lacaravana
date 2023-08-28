@@ -1,8 +1,13 @@
+'use client';
+
 import Button from '@/components/Buttton/Button';
 import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import './pizza.css';
 import { url } from '@/utils/url';
+import useUser from '@/store/store';
+import { toast } from 'react-hot-toast';
+import { metadata } from '@/app/layout';
 interface pizzaProps {
 	rows: {
 		available: boolean;
@@ -13,17 +18,31 @@ interface pizzaProps {
 		name: string;
 		price: number;
 		updatedAt: string;
-	} | null;
+	};
 }
 //TODO: click on pizza button keep in it store after in checkout then post
 
 const Pizza: FC = ({}) => {
-	const [data, setData] = useState<pizzaProps>();
+	const [data, setData] = useState<pizzaProps[]>([]);
 	const [loading, setLoading] = useState(true);
+	const { addStore, store } = useUser();
 	const fecthData = async () => {
 		const response = await fetch(`${url}/api/v1/pizza/view?page=1&&limit=2`);
 		const res = await response.json();
-		setData(res.data);
+		console.log(res, '[res]');
+		setData(res.data.rows);
+		// setPizza((prev) =>{ if(prev.id === e.id)} ({ ...prev, quantity: qt-= 1 })))
+
+		// [{id: '3423', quantity: 1}, {id: '23434', quantity: 5}]
+		// // {
+		// // 	status: 200,
+		// // 	data: pizzas.rows,
+		// // 	metadata: {
+		// // 		total: pizzas.count,
+		// // 		pages: 2,
+		// // 		page: 1
+		// // 	}
+		// // }
 		setLoading(false);
 	};
 
@@ -31,7 +50,8 @@ const Pizza: FC = ({}) => {
 		fecthData();
 	}, []);
 
-	console.log(data?.rows);
+	console.log(data, '[]')
+
 
 	return (
 		<div style={{ margin: '30px', display: 'flex', flexDirection: 'column' }}>
@@ -89,10 +109,12 @@ const Pizza: FC = ({}) => {
 						width: '700px',
 					}}
 				>
-					{loading
-						? 'loading ...'
-						: data?.rows.map((item) => (
+					{loading && 'loading...'}
+						{/* ? 'loading ...' */}
+						{!loading && data?.length === 0 ? 'no data'
+						: data?.map((item: any) => (
 								<div
+								key={item.id}
 									style={{
 										display: 'flex',
 										flexDirection: 'row',
@@ -132,6 +154,29 @@ const Pizza: FC = ({}) => {
 													backgroundColor: 'transparent',
 													border: 'none',
 													position: 'relative',
+													cursor: 'pointer',
+												}}
+												onClick={() => {
+													let alreadyIncart = false;
+													store.forEach((i: any) => {
+														if (i.id === item.id) {
+															addStore({
+																...store,
+																quantity: i.quantity + 1,
+															});
+															alreadyIncart = true;
+														}
+													});
+													if (!alreadyIncart) {
+														addStore({
+															available: item.available,
+															id: item.id,
+															name: item.name,
+															price: item.price,
+															image: item.image,
+															quantity: 1,
+														});
+													}
 												}}
 											/>
 										</div>

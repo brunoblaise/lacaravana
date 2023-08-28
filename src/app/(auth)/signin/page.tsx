@@ -6,6 +6,7 @@ import { url } from '@/utils/url';
 import { toast } from 'react-hot-toast';
 import useUser from '@/store/store';
 import { useRouter } from 'next/navigation';
+import cookieCutter from 'cookie-cutter';
 //DONE: set token in cookie in nextjs server side
 //TODO: file middleware.ts -> root folder to check token (list to be allowed to access)
 
@@ -38,7 +39,8 @@ const page: FC = ({}) => {
 				toast.success(msg);
 				addUser(data);
 				/// set token
-				document.cookie = `token=${data.token}`;
+				// document.cookie = `token=${data.token}`;
+				cookieCutter.set('token', data?.token);
 				redirect.push('/dashboard');
 			} else {
 				return toast.error(msg || 'Server error');

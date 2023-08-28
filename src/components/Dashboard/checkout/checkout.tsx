@@ -1,7 +1,13 @@
-import { FC } from 'react';
+import { FC, use } from 'react';
 import './checkout.css';
 import Image from 'next/image';
 import Button from '@/components/Buttton/Button';
+import useUser from '@/store/store';
+import { Empty } from 'antd';
+import { url } from '@/utils/url';
+import { toast } from 'react-hot-toast';
+import cookieCutter from 'cookie-cutter';
+
 interface checkoutProps {
 	data:
 		| {
@@ -15,8 +21,41 @@ interface checkoutProps {
 		  }
 		| undefined;
 }
-//TODO: post the checkout
+
+//TODO:  rendering problem in checkout && price update && checkot all products
 const Checkout: FC<checkoutProps> = ({ data }) => {
+	const { store, removeAll } = useUser();
+
+	// const tokenizer = document.cookie.split('=')[1];
+	const tokenizer = cookieCutter.get('token');
+
+	console.log(tokenizer, 'tokenizer')
+	const post = async (id: number) => {
+		try {
+			const res = await fetch(`${url}/api/v1/order/place/${id}`, {
+				method: 'POST',
+				headers: { 'Content-type': 'application/json', 'token': tokenizer },
+				// body: {  quantity: store.}
+			});
+			const data = await res.json();
+
+			const { msg, STATUS } = data;
+			if (STATUS === 200) {
+				toast.success(msg);
+
+				/// set token
+				//document.cookie = `token=${data.token}`;
+				//redirect.push('/dashboard');
+			} else {
+				return toast.error(msg || 'Server error');
+			}
+		} catch (err: any) {
+			console.error('<checkout post post>', err);
+			toast.error('Server error');
+		}
+	};
+
+	console.log(store, 'store');
 	return (
 		<div
 			style={{ marginLeft: '-230px', padding: '20px' }}
@@ -64,46 +103,52 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 					<h3 style={{ padding: '10px', marginLeft: '120px' }}>See All</h3>
 				</div>
 
-				<div className="menucard">
-					<Image
-						src="/images/toppng.png"
-						alt="checkout"
-						width={89}
-						height={86}
-						objectFit="cover"
-					/>
-					<div style={{ padding: '10px' }}>
-						<h2>Chicken Burger</h2>
-						<p>8 inch</p>
-						<span>$12.00</span>
+				{store?.length === undefined && store?.length === 0
+					? ''
+					: store?.map((item: any) => (
+							<div className="menucard" key={item.id}>
+								<Image
+									src="/images/toppng.png"
+									alt="checkout"
+									width={89}
+									height={86}
+									objectFit="cover"
+								/>
+								<div style={{ paddingTop: '10px' }}>
+									<h2>{item.name}</h2>
+									<span>{item?.price !== undefined ? `RWF ${item.price}` : ''}</span>
 
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								position: 'relative',
-								bottom: '1px',
-								left: '130px',
-							}}
-						>
-							<Image
-								src="/images/decrease.svg"
-								alt="checkout"
-								width={30}
-								height={30}
-								objectFit="cover"
-							/>
-							<h2>1</h2>
-							<Image
-								src="/images/increse.svg"
-								alt="checkout"
-								width={30}
-								height={30}
-								objectFit="cover"
-							/>
-						</div>
-					</div>
-				</div>
+									<div
+										style={{
+											display: 'flex',
+											flexDirection: 'row',
+											position: 'relative',
+											bottom: '1px',
+											left: '130px',
+										}}
+									>
+										<Image
+											src="/images/decrease.svg"
+											alt="checkout"
+											width={30}
+											height={30}
+											objectFit="cover"
+										/>
+										<h2>{item.quantity}</h2>
+										<Image
+											src="/images/increse.svg"
+											alt="increase"
+											width={30}
+											height={30}
+											objectFit="cover"
+											onClick={() => {
+												item.quantity++;
+											}}
+										/>
+									</div>
+								</div>
+							</div>
+					  ))}
 
 				<div style={{ display: 'flex', flexDirection: 'row', padding: '16px' }}>
 					<h2>Total Price</h2>
@@ -125,6 +170,11 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 						position: 'relative',
 						top: '10px',
 						left: '120px',
+						cursor: 'pointer',
+					}}
+					onClick={() => {
+						removeAll();
+						//post(item.id);
 					}}
 				/>
 			</div>
@@ -133,3 +183,4 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 };
 
 export default Checkout;
+
