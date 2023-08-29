@@ -58,7 +58,6 @@ const page: FC = ({}) => {
 			wrapperCol={{ span: 8 }}
 			initialValues={{ remember: true }}
 			onFinish={(values) => {
-				console.log(values);
 				const { email, password }: User = values;
 				setUser({ email, password });
 				post();

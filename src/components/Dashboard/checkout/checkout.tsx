@@ -1,4 +1,4 @@
-import { FC, use } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './checkout.css';
 import Image from 'next/image';
 import Button from '@/components/Buttton/Button';
@@ -6,7 +6,7 @@ import useUser from '@/store/store';
 import { Empty } from 'antd';
 import { url } from '@/utils/url';
 import { toast } from 'react-hot-toast';
-import cookieCutter from 'cookie-cutter';
+import cookieCutter, { set } from 'cookie-cutter';
 
 interface checkoutProps {
 	data:
@@ -22,30 +22,48 @@ interface checkoutProps {
 		| undefined;
 }
 
+interface Cart {
+	userId: number | undefined;
+	pizzaId: number;
+	quantity: number;
+}
 //TODO:  rendering problem in checkout && price update && checkot all products
 const Checkout: FC<checkoutProps> = ({ data }) => {
-	const { store, removeAll } = useUser();
+	const { store, removeAll, updateData } = useUser();
+	const [cart, setCart] = useState<Cart[]>([]);
+	const [total, setTotal] = useState(0);
 
 	// const tokenizer = document.cookie.split('=')[1];
-	const tokenizer = cookieCutter.get('token');
 
-	console.log(tokenizer, 'tokenizer')
-	const post = async (id: number) => {
+	const tokenizer = cookieCutter.get('token');
+	const arr = store?.map((item: any) => {
+		return {
+			userId: data?.id,
+			pizzaId: item.id,
+			quantity: item.quantity,
+		};
+	});
+
+	const post = async () => {
 		try {
-			const res = await fetch(`${url}/api/v1/order/place/${id}`, {
+			setCart(arr);
+			const product = cart;
+			const body = {
+				product,
+			};
+			const res = await fetch(`${url}/api/v1/order/place`, {
 				method: 'POST',
 				headers: { 'Content-type': 'application/json', 'token': tokenizer },
-				// body: {  quantity: store.}
+				body: JSON.stringify(body),
 			});
-			const data = await res.json();
 
-			const { msg, STATUS } = data;
-			if (STATUS === 200) {
-				toast.success(msg);
+			const dat = await res.json();
+			//console.log(dat, '[dat]')
+			const { msg, STATUS } = dat;
 
-				/// set token
-				//document.cookie = `token=${data.token}`;
-				//redirect.push('/dashboard');
+			if (STATUS === 201) {
+				toast.success('sent');
+				removeAll();
 			} else {
 				return toast.error(msg || 'Server error');
 			}
@@ -55,7 +73,13 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 		}
 	};
 
-	console.log(store, 'store');
+	useEffect(() => {
+		const total = store?.reduce((acc: any, item: any) => {
+			return acc + item.price * item.quantity;
+		}, 0);
+		setTotal(total);
+	}, [store]);
+
 	return (
 		<div
 			style={{ marginLeft: '-230px', padding: '20px' }}
@@ -106,7 +130,10 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 				{store?.length === undefined && store?.length === 0
 					? ''
 					: store?.map((item: any) => (
-							<div className="menucard" key={item.id}>
+							<div
+								className="menucard"
+								key={item.id}
+							>
 								<Image
 									src="/images/toppng.png"
 									alt="checkout"
@@ -133,6 +160,15 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 											width={30}
 											height={30}
 											objectFit="cover"
+											onClick={() => {
+												//item.quantity++;
+												//;
+												store.forEach((i: any) => {
+													if (i.id === item.id) {
+														updateData(item.id, { quantity: i.quantity - 1 });
+													}
+												});
+											}}
 										/>
 										<h2>{item.quantity}</h2>
 										<Image
@@ -142,7 +178,13 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 											height={30}
 											objectFit="cover"
 											onClick={() => {
-												item.quantity++;
+												//item.quantity++;
+
+												store.forEach((i: any) => {
+													if (i.id === item.id) {
+														updateData(item.id, { quantity: i.quantity + 1 });
+													}
+												});
 											}}
 										/>
 									</div>
@@ -152,7 +194,7 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 
 				<div style={{ display: 'flex', flexDirection: 'row', padding: '16px' }}>
 					<h2>Total Price</h2>
-					<span style={{ marginLeft: '180px' }}>$52.00</span>
+					<span style={{ marginLeft: '180px' }}>{total}</span>
 				</div>
 				<Button
 					name="Checkout"
@@ -173,7 +215,8 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 						cursor: 'pointer',
 					}}
 					onClick={() => {
-						removeAll();
+						post();
+						//console.log(cart, '[cart]');
 						//post(item.id);
 					}}
 				/>
@@ -183,4 +226,3 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 };
 
 export default Checkout;
-

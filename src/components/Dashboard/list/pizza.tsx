@@ -25,33 +25,28 @@ interface pizzaProps {
 const Pizza: FC = ({}) => {
 	const [data, setData] = useState<pizzaProps[]>([]);
 	const [loading, setLoading] = useState(true);
-	const { addStore, store } = useUser();
+	const { addStore, store, updateData } = useUser();
 	const fecthData = async () => {
 		const response = await fetch(`${url}/api/v1/pizza/view?page=1&&limit=2`);
 		const res = await response.json();
 		console.log(res, '[res]');
 		setData(res.data.rows);
-		// setPizza((prev) =>{ if(prev.id === e.id)} ({ ...prev, quantity: qt-= 1 })))
 
-		// [{id: '3423', quantity: 1}, {id: '23434', quantity: 5}]
-		// // {
-		// // 	status: 200,
-		// // 	data: pizzas.rows,
-		// // 	metadata: {
-		// // 		total: pizzas.count,
-		// // 		pages: 2,
-		// // 		page: 1
-		// // 	}
-		// // }
+		// {
+		// 	status: 200,
+		// 	data: pizzas.rows,
+		// 	metadata: {
+		// 		total: pizzas.count,
+		// 		pages: 2,
+		// 		page: 1
+		// 	}
+		// }
 		setLoading(false);
 	};
 
 	useEffect(() => {
 		fecthData();
 	}, []);
-
-	console.log(data, '[]')
-
 
 	return (
 		<div style={{ margin: '30px', display: 'flex', flexDirection: 'column' }}>
@@ -110,11 +105,12 @@ const Pizza: FC = ({}) => {
 					}}
 				>
 					{loading && 'loading...'}
-						{/* ? 'loading ...' */}
-						{!loading && data?.length === 0 ? 'no data'
+					{/* ? 'loading ...' */}
+					{!loading && data?.length === 0
+						? 'no data'
 						: data?.map((item: any) => (
 								<div
-								key={item.id}
+									key={item.id}
 									style={{
 										display: 'flex',
 										flexDirection: 'row',
@@ -160,10 +156,7 @@ const Pizza: FC = ({}) => {
 													let alreadyIncart = false;
 													store.forEach((i: any) => {
 														if (i.id === item.id) {
-															addStore({
-																...store,
-																quantity: i.quantity + 1,
-															});
+															updateData(item.id, { quantity: i.quantity + 1 });
 															alreadyIncart = true;
 														}
 													});

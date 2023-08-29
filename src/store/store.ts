@@ -49,6 +49,7 @@ interface User {
 		  ]
 		| any;
 	addStore: (product: any) => void;
+	updateData: (id: number, newData: {}) => void;
 	removeAll: () => void;
 }
 
@@ -79,6 +80,10 @@ export const useUser = create(
 			addStore: (product: any) =>
 				set((state) => ({
 					store: [...state.store, product],
+				})),
+			updateData: (id, newData) =>
+				set((state) => ({
+					store: state.store.map((item: any) => (item.id === id ? { ...item, ...newData } : item)),
 				})),
 
 			removeAll: () =>
