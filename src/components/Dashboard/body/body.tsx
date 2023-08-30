@@ -27,25 +27,35 @@ const Body: FC<bodyProps> = ({}) => {
 				flexDirection: 'row',
 			}}
 		>
-			<Nav />
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-				}}
-			>
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-					}}
-				>
-					<Header name={name} />
-					<Pizza />
-				</div>
+			{DATA?.role === 'user' ? (
+				<>
+					<Nav />
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+						}}
+					>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+							}}
+							className=' w-full flex'
+						>
+							<div className='w-1/3'>hjh</div>
+							<Header name={name} />
+							<Pizza />
+						</div>
 
-				<Checkout data={DATA} />
-			</div>
+						<Checkout data={DATA} />
+					</div>
+				</>
+			) : (
+				<>
+					<h1>hello</h1>
+				</>
+			)}
 		</div>
 	);
 };
