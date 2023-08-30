@@ -43,7 +43,7 @@ const Body: FC<bodyProps> = ({}) => {
 							}}
 							className=' w-full flex'
 						>
-							<div className='w-1/3'>hjh</div>
+						
 							<Header name={name} />
 							<Pizza />
 						</div>
@@ -53,7 +53,7 @@ const Body: FC<bodyProps> = ({}) => {
 				</>
 			) : (
 				<>
-					<h1>hello</h1>
+					<h1>Admin</h1>
 				</>
 			)}
 		</div>

@@ -58,7 +58,7 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 			});
 
 			const dat = await res.json();
-			//console.log(dat, '[dat]')
+			console.log(dat.message, '[dat]');
 			const { msg, STATUS } = dat;
 
 			if (STATUS === 201) {
@@ -114,13 +114,115 @@ const Checkout: FC<checkoutProps> = ({ data }) => {
 			</div>
 
 			<div style={{ position: 'relative', top: '80px' }}>
-				<Image
-					src="/images/cart.png"
-					alt="checkout"
-					width={400}
-					height={249}
-					objectFit="cover"
-				/>
+				<div>
+					<div
+						style={{
+							width: '421px',
+							height: '200px',
+							transform: ' rotate(-6.915deg)',
+							borderRadius: ' 35px',
+							zIndex: -99,
+							background: 'linear-gradient(0deg, #2F2F2F 0%, #2F2F2F 100%), #2F2F2F',
+						}}
+					></div>
+					<div
+						style={{
+							position: 'relative',
+							width: '421px',
+							height: '200px',
+							bottom: '200px',
+							borderRadius: '35px',
+							background: 'linear-gradient(133deg, #FF9921 23.26%, #FFCB8E 100%), #2F2F2F',
+							boxShadow: '2px 5px 40px 0px rgba(255, 153, 33, 0.20)',
+						}}
+					>
+						<div style={{ padding: '10%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									justifyContent: 'space-between',
+								}}
+							>
+								<div
+									style={{
+										color: '#FFF',
+
+										fontSize: '22px',
+										fontStyle: 'normal',
+										fontWeight: 700,
+										lineHeight: 'normal',
+									}}
+								>
+									Universal Card
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+									}}
+								>
+									<div
+										style={{
+											position: 'relative',
+											width: '50px',
+											height: '50px',
+											background: '#FFCB8E',
+											borderRadius: '100px',
+											left: '20px',
+										}}
+									></div>
+									<div
+										style={{ width: '50px', height: '50px', background: '#FFECD6', borderRadius: '100px' }}
+									></div>
+								</div>
+							</div>
+
+							<div>
+								<div
+									style={{
+										color: '#FFF',
+
+										fontSize: '22px',
+										fontStyle: 'normal',
+										fontWeight: 700,
+										lineHeight: 'normal',
+										paddingBottom: '20px',
+									}}
+								>
+									5214 4587 9658 1452
+								</div>
+
+								<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+									<div
+										style={{
+											color: '#FFF',
+
+											fontSize: '18px',
+											fontStyle: 'normal',
+											fontWeight: 700,
+											lineHeight: 'normal',
+										}}
+									>
+										John Smith
+									</div>
+									<div
+										style={{
+											color: '#FFF',
+
+											fontSize: '18px',
+											fontStyle: 'normal',
+											fontWeight: 700,
+											lineHeight: 'normal',
+										}}
+									>
+										12/24
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'row', padding: '20px' }}>
 					<h1>Order Menu</h1>
